@@ -12,34 +12,33 @@ int main()
         cin >> C[i];
 	}
     S0 = C[10] ^ C[8] ^ C[6] ^ C[4] ^ C[2] ^ C[0];
-    S1 = C[9]  ^ C[8] ^ C[6] ^ C[5] ^ C[1] ^ C[0];
+    S1 = C[9]  ^ C[8] ^ C[5] ^ C[4] ^ C[1] ^ C[0];
     S2 = C[7]  ^ C[6] ^ C[5] ^ C[4];
     S3 = C[3]  ^ C[2] ^ C[1] ^ C[0];
-	if(S0 == 0 && S1 == 0 && S2 == 0 && S3 == 0)
-    {
-        cout << "\nNo error detected in the transmission." << endl;
-    
-        D[0] = C[0];
-        D[1] = C[1];
-        D[2] = C[2];
-        D[3] = C[4];
-        D[4] = C[5];
-        D[5] = C[6];
-        D[6] = C[8];
+	int error_pos = (S3 * 8) + (S2 * 4) + (S1 * 2) + S0;
 
-        cout << "Extracted Message: ";
-        for(i = 0; i < 7; i++)
-        {
-            cout << D[i];
+    if (error_pos != 0) {
+        cout << "Error detected at position: " << error_pos<<endl;
+        if (error_pos <= 11) {
+            C[11 - error_pos] = !C[11 - error_pos];
+            cout << "Error corrected."<<endl;
         }
-        cout << endl;
+    } else {
+        cout << "No error detected."<<endl;
     }
-    else
-    {
-        cout << "\nError detected during transmission!" << endl;
-        cout << "Syndrome bits (S3 S2 S1 S0): " << S3 << S2 << S1 << S0 << endl;
+
+    D[0] = C[0];
+    D[1] = C[1];
+    D[2] = C[2];
+    D[3] = C[4];
+    D[4] = C[5];
+    D[5] = C[6];
+    D[6] = C[8];
+
+    cout << "Decoded message: ";
+    for (i = 0; i < 7; i++) {
+        cout << D[i];
     }
 
     return 0;
 }
-
