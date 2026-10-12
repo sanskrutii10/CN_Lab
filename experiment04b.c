@@ -26,7 +26,7 @@ int main()
         {
             if(counter == 5)
             {
-                // This 0 was inserted during stuffing
+            
                 counter = 0;
             }
             else
